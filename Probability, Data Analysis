@@ -1,0 +1,115 @@
+clc
+format long
+%Question 2 Part 1 d
+%m
+m_g=[430.29,447.99,438.55,434.62,415.65,412.89,359.52,419.13,459.61,413.81,399.82,423.14,453.21,405.51];
+%convert m from g to kg
+m_kg=m_g./1000;
+%Calculate mean and standard deviation
+m=mean(m_kg)
+%Mean of m = 0.422410000000000g
+s_m=std(m_kg)
+%Standard deviation of m = 0.025466635790020g
+
+%u
+u_kmh=[110.2,118.7,103.51,116.35,121.04,108.21,115.87,115.69];
+%convert u from km/h to m/s
+u_ms=u_kmh.*5/18;
+%Calculate mean and standard deviation
+u=mean(u_ms)
+%Mean of u = 31.582291666666666m/s
+s_u=std(u_ms)
+%Standard deviation of u = 1.629185653619451m/s
+
+%Calculate t
+%Using standard gravity
+g=9.80665;
+t=mean(u_ms)/g
+%t = 3.220497485549771s
+
+%Calculate W
+W=mean(m_kg)*g*t/2*(g*t-2*mean(u_ms))
+%W_z = -2.106645574349013e+02J
+%
+
+%Calculate uncertainty of W
+%Using given value for uncertainty for t
+s_t=0.43;
+%Calculate variance of W
+variance_W=(m*g*t)^2*((0.5*(g*t-2*u))^2*(s_m/m)^2+(-u)^2*(s_u/u)^2+(g*t-u)^2*(s_t/t)^2);
+%Calculate standard deviation of W
+std_W=(variance_W)^0.5
+%Standard variation of W = 25.173288525007674J
+
+%Calculating uncertainty of W as 95% confidence interval
+CONF_W=1.96*std_W/22^0.5
+%Uncertainty of W as 95% confidence interval = 10.519247767253884
+%
+
+%Question 2 Part 1 e
+
+%Evaluating sensitivity of std_W to m only
+%Assuming no uncertainty in u, t
+s_u=0;
+s_t=0;
+%Subbing in 0.05 for s_m/m
+variance_W_m=(m*g*t)^2*((0.5*(g*t-2*u))^2*(0.05)^2+(-u)^2*(s_u/u)^2+(g*t-u)^2*(s_t/t)^2);
+std_W_m=(variance_W_m)^0.5
+%Calculation sensitivity of sigma W to 5% uncertainty of m =
+%10.533227871745066J
+
+%Evaluating sensitivity of std_W to u only
+%Assuming no uncertainty in m, t
+s_m=0;
+s_t=0;
+%Subbing in 0.05 for s_u/u
+variance_W_u=(m*g*t)^2*((0.5*(g*t-2*u))^2*(s_m/m)^2+(-u)^2*(0.05)^2+(g*t-u)^2*(s_t/t)^2);
+std_W_u=(variance_W_u)^0.5
+%Calculation sensitivity of sigma W to 5% uncertainty of u =
+%21.066455743490131J
+
+%Evaluating sensitivity of std_W to t only
+%Assuming no uncertainty in m, u
+s_m=0;
+s_u=0;
+%Subbin in 0.05 for s_t/t
+%Subbing in 0 for g*t-u
+variance_W_t=(m*g*t)^2*((0.5*(g*t-2*u))^2*(s_m/m)^2+(-u)^2*(s_u/u)^2+(0)^2*(0.05)^2);
+std_W_t=(variance_W_t)^0.5
+%Calculation sensitivity of sigma W to 5% uncertainty of t = 0J
+
+%Question 2 Part 2 b
+
+%Calculating E_KE
+E_KE=0.5*m*u^2
+%E_KE = 2.106645574349013e+02J
+
+%Calculating uncertainty of E_KE
+%Defining sigma m and sigma u
+s_m=std(m_kg)
+s_u=std(u_ms)
+%Calculating variance of E_KE
+variance_E_KE=(0.5*m*u^2)^2*((s_m/m)^2+4*(s_u/u)^2);
+%Calculating standard deviation of E_KE
+std_E_KE=(variance_E_KE)^0.5
+%Calculating uncertainty of E_KE as 95% confidence interval
+%n=4+19
+%n=22
+CONF_E_KE=1.96*std_E_KE/22^0.5
+%Uncertainty of E_KE as 95% confidence interval = 10.519247767253882J
+
+%Calculating h
+h=-W/(m*g)
+%h = 50.855345450199756m
+%Calculating uncertainty of E_PE
+%Using given value of sigma h
+s_h=0.28
+%Calculating variance of E_PE
+variance_E_PE=(m*g*h)^2*((s_m/m)^2+(s_h/h)^2);
+%Calculating standard deivation of E_PE
+std_E_PE=(variance_E_PE)^0.5
+%Standard deviation of E_PE = 12.753587548821040J
+%Calculating uncertainty of E_PE as 95% confidence interval
+%n=22
+CONF_E_PE=1.96*std_E_PE/22^0.5
+%Uncertainty of E_PE as 95% confidence interval = 5.329385042964772J
