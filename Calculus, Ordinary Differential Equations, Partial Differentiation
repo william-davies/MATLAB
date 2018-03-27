@@ -1,0 +1,137 @@
+%Question 1a
+%(i)
+%First we enter data points for time
+time=[0,10,15,20,32,59,62,125];
+%Then we enter data points for velocity
+velocity=[0,56.40,97.23,136.25,226.16,403.86,440.44,1265.23];
+%We plot the graph of velocity against time
+plot(time,velocity,'x');
+xlabel ('Time (s)');
+ylabel ('Velocity (m/s)');
+title ('Space vehicle velocity against time');
+%Using the 'Basic Fitting' tool, we obtain a quartic expression that models 
+%the space vehicle's velocity over time
+
+%To obtain an expression that models the space vehicle's acceleration over
+%time, we differentiate the expression modelling velocity
+syms v t;
+v=1.1411e-05*t^4-0.0019408*t^3+0.10204*t^2+5.4175*t-1.5544;
+diff(v,t)
+
+%To obtain an expression that models the space vehicle's distance-travelled
+%over time, we integrate the expression modelling velocity
+int(v,t)
+
+%(ii)
+%To find minimum and maximum acceleration, we plot the graph of
+%acceleration against time
+t=[0,10,15,20,32,59,62,125];
+a=(3367932746001595*t.^3)/73786976294838206464 - (13425540336845811*t.^2)/2305843009213693952 + (2551*t)/12500 + 2167/400;
+plot(t,a)
+xlabel('time(s)');
+ylabel('acceleration(m/s^2)');
+title('Space vehicle acceleration against time');
+%We then find minimum and maximum acceleration
+min(a)
+%Min acceleration is 5.4175
+max(a)
+%Max acceleration is 29.1009
+%We then find the time at which acceleration is 5.4175
+t(a==5.4175)
+%Acceleration is 5.4175 at t=0
+%We then find the time at which acceleration is 29.1009
+t(a==5.29.1009)
+%Acceleration is 29.1009 at t=125
+%We plug in these t values into the distance-travelled equation
+t=0
+(673586549200319*t^5)/295147905179352825856 - (4475180112281937*t^4)/9223372036854775808 + (2551*t^3)/75000 + (2167*t^2)/800 - (1943*t)/1250
+%When t=0 and acceleration is 5.4175, distance-travelled is 0
+t=125
+(673586549200319*t^5)/295147905179352825856 - (4475180112281937*t^4)/9223372036854775808 + (2551*t^3)/75000 + (2167*t^2)/800 - (1943*t)/1250
+%When t=125 and acceleration is 29.1009, distance-travelled is 5.9752e+04
+
+%Question 1b
+%(i)
+%Integrate lnx
+syms y x;
+y=log(x);
+int(y,x)
+
+%Integrate xlnx
+y=x*log(x);
+int(y,x)
+
+%Integrate x^2lnx
+y=x^2*log(x);
+int(y,x)
+
+%Integrate x^3lnx
+y=x^3*log(x);
+int(y,x)
+
+%Integrate x^7lnx
+y=x^7*log(x);
+int(y,x)
+
+%(ii)
+
+%(iii)
+
+%Question 2a
+syms y x;
+y=2*cos(3*x)-x^2+7*x-6;
+diff(y,x)
+
+%Question 2b
+%First we plot y against x for 0<x<6
+%We define h as the x step
+x=0:h:6;
+h=0.1;
+y=2*cos(3*x)-x.^2+7*x-6;
+plot(x,y)
+xlabel('x');
+ylabel('y');
+title('y against x');
+
+%Then we plot y' against x for 0<x<6
+x=0:h:6;
+h=0.1;
+dy=7-6*sin(3*x)-2*x;
+plot(x,dy)
+xlabel('x');
+ylabel('dy');
+title('dy against x');
+
+%Question 2c
+x=0:h:6;
+h=0.1;
+%First we need to define y_i-1, y_i, y_i+1
+y_i=2*cos(3*x)-x.^2+7*x-6;
+y_add=2*cos(3*(x+h))-((x+h).^2)+7.*(x+h)-6;
+y_minus=2*cos(3*(x-h))-((x-h).^2)+7.*(x-h)-6;
+%We plot our estimate of y' using the forward finite difference method
+y_forward=(y_add-y_i)./h;
+plot(x,y_forward)
+hold on
+%We plot our estimate of y' using the backward finite difference method
+y_backward=(y_i-y_minus)./h;
+plot(x,y_backward)
+
+%We plot our estimate of y' using the centered finite difference method
+y_centred=(y_add-y_minus)./(2.*h);
+plot(x,y_centred)
+
+%We also plot our original analytical expression for y'
+dy=7-6*sin(3*x)-2*x;
+plot(x,dy)
+legend('y forward','y backward','y centred','dy');
+xlabel('x');
+ylabel('dy');
+title('Different estimates of dy compared to the analytical expression for dy at h=0.1');
+hold off
+
+%To obtain this graph for h=0.1
+
+%I varied h and obtained a graph for h=0.01
+
+%I varied h and obtained a graph for h=1
