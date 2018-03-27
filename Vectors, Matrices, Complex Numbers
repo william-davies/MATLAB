@@ -1,0 +1,46 @@
+%Question 1a i)
+t=0:0.4:40;%time in seconds
+a=[20*sin(t), 20*cos(t), 0*t];%particle swirling motion
+b=[0*t,0*t,10-(t/4).^2];%particle downwards motion
+s=a+b;%particle overall trajectory
+s=[20*sin(t),20*cos(t),10-(t/4).^2];%particle overall trajectory
+
+%Question 1a ii)
+s=[20*sin(t),20*cos(t),10-(t/4).^2];%particle overall trajectory
+Xs=20*sin(t);
+Ys=20*cos(t);
+Zs=10-(t/4).^2;
+plot3(Xs,Ys,Zs);
+title('Graph of Particle Trajectory from t=0s to t=40s');
+
+
+%Question 1a iii)
+s=[20*sin(t),20*cos(t),10-(t/4).^2];%particle displacement
+v=[20*cos(t),-20*sin(t),-t/8];%particle velocity
+speed=sqrt((20*cos(t)).^2+(-20*sin(t)).^2+(-t/8).^2);%particle speed
+t=15; %time in seconds
+speed=sqrt((20*cos(t)).^2+(-20*sin(t)).^2+(-t/8).^2);%particle speed at t=15s
+
+%Question 1a iv)
+t=0:0.4:40;%time in seconds
+speed=sqrt((20.*cos(t)).^2+(-20.*sin(t)).^2+(-t./8).^2);%particle speed
+plot(t,speed);
+title('Graph of Particle Speed from t=0s to t=40s');
+
+%Question 2d)
+for alpha=0.25:0.25:1
+    w=logspace(-3,3);%frequency
+    t=1;
+    Ri=1;%R infinity
+    Ro=10;
+    theta=w*t;
+    c=cos(alpha*pi./2);
+    mod_Z=sqrt((Ri.^2*theta.^(2*alpha)+2*c*Ro*Ri*theta.^alpha+Ro.^2)./(1+2*c*theta.^alpha+theta.^(2*alpha)));
+    semilogx(w,mod_Z)
+    hold on
+    xlabel('Frequency (kHz)');
+    ylabel('|Z|');
+    title('A Graph Showing |Z| against Frequency at Different Values of Alpha');
+    legend('alpha=0.25','alpha=0.50','alpha=0.75','alpha=1.00');
+end
+hold off
